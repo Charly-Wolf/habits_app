@@ -1,0 +1,72 @@
+﻿@using HabitsApp.Shared.Entities;
+@using HabitsApp.Models.Dtos
+
+@if (CalendarEntries == null)
+{
+    <h3>Loading Calendar...</h3>
+    <DisplayLoadingSpinner />
+}
+else
+{
+    @*//TODO: Convert to a InLine Editing DataGrid*@
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Simple"
+                AllowSorting="true" EditMode="DataGridEditMode.Single" PageSize="10" AllowPaging="true" 
+                PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true" Data="@CalendarEntries" TItem="CalendarEntryDto" 
+                ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" @ref="entriesGrid">
+        <Columns>
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Date" Title="Date" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:dd/MM/yy}">
+                <EditTemplate Context="entry">
+                    <RadzenDatePicker @bind-Value="entry.Date" Style="width:100%" DateFormat="dd/MM/yy" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+            @*<RadzenDataGridColumn TItem="CalendarEntryDto" Property="ActivityCategoryName" Title="Category" Width="70px" TextAlign="TextAlign.Center" />*@
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="ActivityName" Title="Activity" Width="80px" TextAlign="TextAlign.Center" >
+                <Template Context="entry">
+                    <a href=@($"/ActivityDetails/{entry.ActivityId}")>
+                        @entry.ActivityName
+                    </a>
+                </Template>
+                <EditTemplate Context="entry">
+                    @*TODO: Bind Value - Activity *@
+                    <RadzenDropDown TValue="string" Data=@Activities TextProperty="Name"
+                                ValueProperty="Name" Style="width: 100%; max-width: 400px;" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Start" Title="Start" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}">
+                <EditTemplate Context="entry">
+                    <RadzenDatePicker @bind-Value="entry.Start" Style="width:100%" DateFormat="hh:mm tt" ShowTime="true"
+                                  HourFormat="12" TimeOnly="true" />
+                </EditTemplate>
+            </RadzenDataGridColumn> 
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="End" Title="End" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}" Sortable=false>
+                <EditTemplate Context="entry">
+                    <RadzenDatePicker @bind-Value="entry.End" Style="width:100%" DateFormat="hh:mm tt" ShowTime="true"
+                                  HourFormat="12" TimeOnly="true" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Title="Duration" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm:ss}">
+                <Template Context="entry">
+                    @((entry.End - entry.Start))
+                </Template>
+            </RadzenDataGridColumn>
+            @*<RadzenDataGridColumn TItem="CalendarEntryDto" Property="Comment" Title="Comment" Width="80px" TextAlign="TextAlign.Center" />*@
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Context="entry" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="30px">
+                <Template Context="entry">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
+                                  Click="@(args => EditRow(entry))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    @*<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entry))" @onclick:stopPropagation="true">*@
+                    @*</RadzenButton>*@
+                </Template>
+                <EditTemplate Context="entry">
+                    @*<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(order))">
+                    </RadzenButton>*@
+                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(entry))">
+                    </RadzenButton>
+                    @*<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(order))">
+                    </RadzenButton>*@
+                </EditTemplate>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}

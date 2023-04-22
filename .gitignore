@@ -1,0 +1,32 @@
+# Build artifacts
+bin/
+obj/
+publish/
+*.log
+*.dll
+*.pdb
+
+# Dependencies
+bin/
+obj/
+packages/
+node_modules/
+*.lock
+*.swp
+*.bak
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+*.psess
+*.vsp
+*.vshost.*
+*.cache
+*.dll.config
+*.dbmdl
+
+# Other files
+*.DS_Store
+Thumbs.db

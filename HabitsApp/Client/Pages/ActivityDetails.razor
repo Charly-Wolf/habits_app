@@ -1,0 +1,43 @@
+﻿@page "/ActivityDetails/{Id:int}"
+
+<div class="rz-p-sm-12 rz-text-align-center">
+    <RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 700px"> 
+        @if (Activity == null && ErrorMessage == null)
+        {
+            <h3>Loading Activity Details...</h3>
+            <DisplayLoadingSpinner />
+        }
+        else if (ErrorMessage != null)
+        {
+            <h3 class="text-danger">@ErrorMessage</h3>
+        }
+        else
+        {
+            <RadzenRow>
+                <h3>Activity Details for @Activity?.Name</h3>
+            </RadzenRow>
+            <RadzenRow Style="padding: 1vw">
+                <div class="row">
+                    <div>
+                        <h4>Category: @Activity?.CategoryName</h4>
+                    </div>
+                </div>
+            </RadzenRow JustifyContent="JustifyContent.Center" Style="padding: 1vw">
+            <RadzenRow>
+                <ActivityStats ActivityCalendarEntries =@ActivityCalendarEntries />
+            </RadzenRow>
+            <RadzenRow JustifyContent="JustifyContent.Center" Style="padding: 1vw">
+                @*TODO: Pass data to Home Component to redirect you to the activity picker component with the activity already selected (ant its category)*@
+                <RadzenLink Path="@pathToActivityPractice">
+                    <RadzenButton Text="TODO:Practice this Habit!" ButtonStyle="ButtonStyle.Success" />
+                </RadzenLink>
+                <RadzenLink Path="@pathToCalendar">
+                    <RadzenButton Text="Full Calendar" ButtonStyle="ButtonStyle.Secondary" />
+                </RadzenLink>
+            </RadzenRow>
+        }
+    </RadzenCard>
+</div>
+
+
+

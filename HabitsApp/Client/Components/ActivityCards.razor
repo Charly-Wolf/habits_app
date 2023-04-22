@@ -1,0 +1,35 @@
+﻿@if (Activities == null)
+{
+    <h3>Loading Activities...</h3>
+    <DisplayLoadingSpinner />
+}
+else 
+{
+    <RadzenStack Orientation=@orientation Wrap=@flexWrap>
+        @foreach (var activity in Activities)
+        {
+            <RadzenCard Style="width: 20vw;">
+                <a href="/ActivityDetails/@activity.Id">
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">
+                        Activity
+                    </RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1">
+                        <b>
+                            @activity.Name
+                        </b>
+                    </RadzenText>
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">
+                        Category
+                    </RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1">
+                        <b>
+                            @activity.CategoryName
+                        </b>
+                    </RadzenText>
+                </a>
+                
+            </RadzenCard>
+        }
+    </RadzenStack>
+    
+}

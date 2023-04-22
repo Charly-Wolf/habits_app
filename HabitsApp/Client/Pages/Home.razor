@@ -1,0 +1,12 @@
+﻿@page "/"
+
+<AppPageTitle />
+
+<ActivityPickerCard Categories=@Categories
+                    Activities=@Activities 
+                    Goals=@Goals
+                    SelectedActivity=@ActiveActivity 
+                    OnSelectedActivityChanged=@UpdateActiveActivity
+                    SelectedCategory=@ActiveCategory
+                    OnSelectedCategoryChanged=@UpdateActiveCategory />
+

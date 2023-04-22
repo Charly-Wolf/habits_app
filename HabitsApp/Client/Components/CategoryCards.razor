@@ -1,0 +1,26 @@
+﻿@using HabitsApp.Shared.Entities;
+
+@if (Categories == null)
+{
+    <h3>Loading categories...</h3>
+    <DisplayLoadingSpinner />
+}
+else
+{
+    <RadzenStack Orientation=@orientation Wrap=@flexWrap>
+        @foreach (var category in Categories)
+        {
+            <RadzenCard Style="width: 20vw;" class="cat-card">
+                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">
+                    Category
+                </RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1">
+                    <b>
+                        @category.Name
+                    </b>
+                </RadzenText>
+            </RadzenCard>
+        }
+        </RadzenStack>
+}
+

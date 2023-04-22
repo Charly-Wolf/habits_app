@@ -1,0 +1,9 @@
+﻿<h1 class="rz-text-align-center rz-shadow-10" style="padding: 0.85rem">Habits Management App</h1>
+@if (pageName != null) 
+{
+    <h2 class="rz-shadow-8" style="padding: 0.85rem">@pageName</h2>
+}
+
+@code {
+    [Parameter] public string? pageName { get; set; }
+}

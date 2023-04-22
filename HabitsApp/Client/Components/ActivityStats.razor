@@ -1,0 +1,17 @@
+﻿    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Simple" AllowSorting="true"
+                    PageSize="10" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                    Data="@ActivityCalendarEntries" TItem="CalendarEntryDto" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+        <Columns>
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Date" Title="Date" Width="60px" TextAlign="TextAlign.Center" FormatString="{0:dd/MM/yy}" />
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Start" Title="Start" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}" />
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Property="End" Title="End" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}" Sortable=false />
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Title="Duration" Width="40px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm:ss}">
+                <Template Context="entry">
+                    @(entry.End - entry.Start)
+                </Template>
+            </RadzenDataGridColumn>
+            @*<RadzenDataGridColumn TItem="CalendarEntryDto" Property="Comment" Title="Comment" Width="80px" TextAlign="TextAlign.Center" />*@
+        </Columns>
+    </RadzenDataGrid>
+
+@*//TODO: Convert to a InLine Editing DataGrid*@

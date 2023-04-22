@@ -1,0 +1,91 @@
+﻿@inject DialogService DialogService
+
+<div class="rz-p-sm-12 rz-text-align-center">
+    <RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 420px">          
+    @if (Activities == null)
+    {
+        <h3>Loading ...</h3>
+        <DisplayLoadingSpinner />
+    }
+    else
+    {
+        <h3>@CardTitle</h3>
+        <div style="padding: 0.7rem">
+            <RadzenRow Style="padding-bottom: 2rem">
+                    <RadzenDropDown TValue="string" Data=@Categories TextProperty="Name"
+                                Style = "width: 100%"
+                                ValueProperty="Name"
+                                Placeholder="Select Category"
+                                Change=@OnChangeCatDropdownOption
+                                Visible=@CatDropDownVisible />
+
+                    @*<RadzenDropDown TValue="string" Data=@Categories TextProperty="Name"
+                                ValueProperty="Name"
+                                Placeholder="Select Category"
+                                Change=@OnChangeCatOfNewActDropdownOption
+                                Visible=@CatOfNewActDropDownVisible />*@
+
+                    @*<RadzenTextBox Visible=@CatTextBoxVisible Style="width: 100%" Placeholder="New Category" Value=@CatTextBoxText />*@
+
+                    @*<RadzenButton Click=@OnClickAddCatBtn Icon="add_circle_outline" ButtonStyle="ButtonStyle.Info" Visible=@AddCatBtnVisible />
+                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Visible=@DeleteCatBtnVisible Click=@OnClickDeleteCatBtn />*@
+
+                    @*<RadzenButton Click=@OnClickCancelCatBtn Icon="highlight_off" ButtonStyle="ButtonStyle.Danger" Visible=@CancelCatBtnVisible />
+                    <RadzenButton Click=@OnClickAcceptCatBtn Icon="check_circle" ButtonStyle="ButtonStyle.Success" Visible=@AcceptCatBtnVisible />*@
+            </RadzenRow>
+            <RadzenRow>
+                    <RadzenDropDown TValue="string" Data=@ActivitiesInSelectedCategory TextProperty="Name"
+                                ValueProperty="Name" Style="width: 100%; max-width: 400px;"
+                                Placeholder="Select Activity"
+                                Change="@OnChangeActDropdownOption"
+                                Visible=@ActDropDownVisible />
+
+                    @*<RadzenTextBox Visible=@ActTextBoxVisible Style="width: 100%" Placeholder="New Activity" Value=@ActTextBoxText />*@
+
+                    @*<RadzenButton Click=@OnClickAddActBtn Icon="add_circle_outline" ButtonStyle="ButtonStyle.Info" Visible=@AddActBtnVisible />
+                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Visible=@DeleteActBtnVisible Click=@OnClickDeleteActBtn />
+
+                    <RadzenButton Click=@OnClickCancelActBtn Icon="highlight_off" ButtonStyle="ButtonStyle.Danger" Visible=@CancelActBtnVisible/>
+                    <RadzenButton Click=@OnClickAcceptActBtn Icon="check_circle" ButtonStyle="ButtonStyle.Success" Visible=@AcceptActBtnVisible/>*@
+                    <RadzenText Visible=GoalCompletedVisible>
+                        @GoalCompletedText
+                    </RadzenText>
+                    <RadzenText Visible=StartTextVisible>
+                        @StartText
+                    </RadzenText>
+                    <RadzenText Visible=EndTextVisible>
+                        @EndText
+                    </RadzenText>
+            </RadzenRow>
+            @*<RadzenRow>
+                    <DisplayTimer @ref=@timerClock OnTimerStarted="@StartTimer" OnTimerStopped="@StopTimer" />
+            </RadzenRow>*@
+        </div>
+        <div style="padding: 0.8rem">
+            <RadzenButton Click=@OnClickStart
+                         Text="Start" ButtonStyle="ButtonStyle.Success"
+                        Visible=@StartBtnVisible />
+
+            <RadzenButton Click=@OnClickStop
+                         Text="Stop" ButtonStyle="ButtonStyle.Primary"
+                         Visible=@StopBtnVisible/>
+
+            <RadzenButton Click=@OnClickBack
+                        Text="Back" ButtonStyle="ButtonStyle.Warning"
+                        Visible=@BackAndRestartBtnsVisible />
+
+            <RadzenButton Click=@OnClickRestart
+                        Text="Restart" ButtonStyle="ButtonStyle.Info"
+                        Visible=@BackAndRestartBtnsVisible />
+
+            <RadzenLink Path="@PathToActStats"> @*TODO: navigate to THIS Activity Stats*@
+                <RadzenButton Text="Statistics" ButtonStyle="ButtonStyle.Secondary"
+                        Visible=@StatsBtnVisible />
+            </RadzenLink>
+                
+
+        </div>
+            
+    }
+    </RadzenCard>   
+</div>
