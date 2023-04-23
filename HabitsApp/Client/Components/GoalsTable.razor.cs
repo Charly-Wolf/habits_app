@@ -34,6 +34,7 @@ namespace HabitsApp.Client.Components
             if (goalsGrid != null) 
             {
                 goalToInsert = new GoalDto();
+                goalToInsert.Date = DateTime.Now; // Default Date for a new Goal = today
                 await goalsGrid.InsertRow(goalToInsert);
             }
         }
