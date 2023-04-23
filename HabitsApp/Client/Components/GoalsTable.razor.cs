@@ -18,7 +18,6 @@ namespace HabitsApp.Client.Components
         GoalDto? goalToInsert; // new Goal to be added to the DB (POST)
         GoalDto? goalToUpdate; // Goal to be edited in the DB (PUT)
 
-
         async Task InsertRow() // Creates a new GoalDto that will be added (POST Request) to the DB if saved
         {
             if (goalsGrid != null) 
@@ -55,6 +54,7 @@ namespace HabitsApp.Client.Components
             if (goalsGrid != null)
             {
                 await goalsGrid.UpdateRow(goalToAdd);
+                await OnInitializedAsync();
             }
         }
 
@@ -81,6 +81,7 @@ namespace HabitsApp.Client.Components
             {
                 Console.WriteLine("GoalService not null !!!");
                 await GoalsService.AddGoal(newGoal); // POST Request
+                await OnInitializedAsync();
             }
             goalToInsert = null;
         }

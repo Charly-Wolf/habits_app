@@ -16,27 +16,34 @@ namespace HabitsApp.Server.Repositories
         }
         public async Task<Goal> AddGoal(GoalDto newGoal)
         {
-            var goal = await (from g in habitsAppDbContext.Goals // BUG: add goal does not work
-                              join activity in habitsAppDbContext.Activities
-                              on g.ActivityId equals activity.Id
-                              where g.Id == newGoal.Id
-                              select new Goal
-                              {
-                                  Id = newGoal.Id,
-                                  ActivityId = newGoal.ActivityId,
-                                  Date = newGoal.Date,
-                                  DurationMinutes = newGoal.DurationMinutes,
-                                  IsCompleted = newGoal.IsCompleted
-                              }).SingleOrDefaultAsync();
+            //var goal = await (from g in habitsAppDbContext.Goals
+            //                  join activity in habitsAppDbContext.Activities
+            //                  on g.ActivityId equals activity.Id
+            //                  where g.Id == newGoal.Id
+            //                  select new Goal
+            //                  {
+            //                      Id = newGoal.Id,
+            //                      ActivityId = newGoal.ActivityId,
+            //                      Date = newGoal.Date,
+            //                      DurationMinutes = newGoal.DurationMinutes,
+            //                      IsCompleted = newGoal.IsCompleted
+            //                  }).SingleOrDefaultAsync();
 
-            if (goal != null)
-            {
+            //if (goal != null)
+            //{
+
+            var goal = new Goal(); // Reverse from GoalDto to Goal
+            goal.ActivityId = newGoal.ActivityId;
+            goal.Date = newGoal.Date;
+            goal.DurationMinutes = newGoal.DurationMinutes;
+            goal.IsCompleted = false;
+
                 var result = await habitsAppDbContext.Goals.AddAsync(goal);
                 await habitsAppDbContext.SaveChangesAsync();
                 return result.Entity;
-            }
+            //}
             // else
-            return null;
+            //return null;
         }
 
         public Task<Goal> DeleteGoal(int id)

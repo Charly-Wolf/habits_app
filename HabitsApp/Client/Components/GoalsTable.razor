@@ -17,8 +17,11 @@ else
                 Data="@Goals" TItem="GoalDto" RowCreate="@OnCreateRow" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or"
                 EditMode="DataGridEditMode.Single" @ref="goalsGrid">
         <Columns>
-            <RadzenDataGridColumn TItem="GoalDto" Property="Date" Title="Date" Width="50px" TextAlign="TextAlign.Center"
+           @* <RadzenDataGridColumn TItem="GoalDto" Property="Date" Title="Date" Width="50px" TextAlign="TextAlign.Center"
                                   FormatString="{0:dd/MM/yy}"  FilterValue="defaultDate"> @*DEFAULT FILTER: TODAY*@
+                <RadzenDataGridColumn TItem="GoalDto" Property="Date" Title="Date" Width="50px" TextAlign="TextAlign.Center"
+                                  FormatString="{0:dd/MM/yy}" SortOrder="SortOrder.Ascending" >
+                    @*DEFAULT FILTER: TODAY*@
                 <EditTemplate Context="goal">
                     <RadzenDatePicker @bind-Value="goal.Date" Style="width:100%" DateFormat="dd/MM/yy" />
                 </EditTemplate>

@@ -19,6 +19,6 @@ namespace HabitsApp.Client.Pages
                 GoalDtos = await GoalService.GetGoals();
                 GoalDtos = GoalDtos.OrderBy(entry => entry.Date);
             }
-        }       
+        } 
     }
 }
