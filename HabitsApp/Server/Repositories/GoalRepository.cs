@@ -46,18 +46,25 @@ namespace HabitsApp.Server.Repositories
             //return null;
         }
 
-        public Task<Goal> DeleteGoal(int id)
+        public async Task<Goal> DeleteGoal(int id)
         {
-            throw new NotImplementedException();
+            var goalToDelete = await habitsAppDbContext.Goals.FindAsync(id);
+
+            if(goalToDelete != null) 
+            {
+                habitsAppDbContext.Goals.Remove(goalToDelete);
+                await habitsAppDbContext.SaveChangesAsync();
+            }
+            return goalToDelete;
         }
 
-        public async Task<IEnumerable<Goal>> GetGoals()
+        public async Task<List<Goal>> GetGoals()
         {
             var goals = await habitsAppDbContext.Goals.ToListAsync();
             return goals;
         }
 
-        public async Task<IEnumerable<Activity>> GetGoalActivities()
+        public async Task<List<Activity>> GetGoalActivities()
         {
             var  goalActivities = await habitsAppDbContext.Activities.ToListAsync();
             return goalActivities;

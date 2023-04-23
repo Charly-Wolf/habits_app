@@ -13,7 +13,7 @@ namespace HabitsApp.Server.Repositories
         {
             this.habitsAppDbContext = habitsAppDbContext;
         }
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<List<Category>> GetCategories()
         {
             var categories = await habitsAppDbContext.Categories.ToListAsync();
             return categories;

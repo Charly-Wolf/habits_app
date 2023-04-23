@@ -16,7 +16,7 @@ namespace HabitsApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<List<Category>>> GetCategories()
         {
             try
             {

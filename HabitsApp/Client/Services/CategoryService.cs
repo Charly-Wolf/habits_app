@@ -14,11 +14,11 @@ namespace HabitsApp.Client.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<List<Category>> GetCategories()
         {
             try
             {
-                var categories = await httpClient.GetFromJsonAsync<IEnumerable<Category>>("api/Category");
+                var categories = await httpClient.GetFromJsonAsync<List<Category>>("api/Category");
 
                 return categories;
             }

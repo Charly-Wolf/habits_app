@@ -26,7 +26,7 @@ namespace HabitsApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CalendarEntryDto>>> GetCalendarEntries()
+        public async Task<ActionResult<List<CalendarEntryDto>>> GetCalendarEntries()
         {
             try
             {

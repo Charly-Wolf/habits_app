@@ -39,13 +39,25 @@ namespace HabitsApp.Client.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<GoalDto>> GetGoals()
+        public async Task<List<GoalDto>> GetGoals()
         {
             try
             {
-                var goals = await httpClient.GetFromJsonAsync<IEnumerable<GoalDto>>("api/Goal");
+                var response = await httpClient.GetAsync("api/Goal");
 
-                return goals;
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<GoalDto>().ToList();
+                    }
+                    return await response.Content.ReadFromJsonAsync<List<GoalDto>>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
             }
             catch (Exception)
             {
@@ -72,6 +84,26 @@ namespace HabitsApp.Client.Services
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public async Task<GoalDto> DeleteGoal(int id)
+        {
+            try
+            {
+                var response = await httpClient.DeleteAsync($"api/Goal/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<GoalDto>();
+                }
+
+                return default(GoalDto);
+            }
+            catch (Exception)
+            {
+                // Log exception
                 throw;
             }
         }

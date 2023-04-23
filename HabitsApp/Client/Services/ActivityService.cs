@@ -13,7 +13,7 @@ namespace HabitsApp.Client.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<ActivityDto>> GetActivities()
+        public async Task<List<ActivityDto>> GetActivities()
         {
             try
             {
@@ -23,10 +23,10 @@ namespace HabitsApp.Client.Services
                 {
                     if(response.StatusCode == System.Net.HttpStatusCode.NoContent) 
                     {
-                        return Enumerable.Empty<ActivityDto>();
+                        return (List<ActivityDto>)Enumerable.Empty<ActivityDto>();
                     }
 
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<ActivityDto>>();
+                    return await response.Content.ReadFromJsonAsync<List<ActivityDto>>();
                 }
                 else 
                 {

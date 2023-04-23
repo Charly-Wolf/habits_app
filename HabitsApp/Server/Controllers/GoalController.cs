@@ -1,9 +1,7 @@
-﻿using HabitsApp.Client.Pages;
-using HabitsApp.Models.Dtos;
+﻿using HabitsApp.Models.Dtos;
 using HabitsApp.Server.Extensions;
-using HabitsApp.Server.Repositories;
 using HabitsApp.Server.Repositories.Contracts;
-using Microsoft.AspNetCore.Http;
+using HabitsApp.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HabitsApp.Server.Controllers
@@ -22,7 +20,7 @@ namespace HabitsApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GoalDto>>> GetGoals()
+        public async Task<ActionResult<List<GoalDto>>> GetGoals()
         {
             try
             {
@@ -122,6 +120,28 @@ namespace HabitsApp.Server.Controllers
             catch (Exception ex)
             {
 
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<GoalDto>> DeleteGoal(int id)
+        {
+            try
+            {
+                var goalToDelete = await goalRepository.DeleteGoal(id);
+                if ( goalToDelete == null) { return NotFound(); }
+
+                var goalActivity = await activityRepository.GetActivity(goalToDelete.ActivityId);
+                
+                if (goalActivity == null) { return NotFound(); }
+
+                var goalToDeleteDto = goalToDelete.ConvertToDto(goalActivity);
+
+                return Ok(goalToDeleteDto);
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

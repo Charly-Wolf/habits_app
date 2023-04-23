@@ -4,7 +4,7 @@ namespace HabitsApp.Client.Services.Contracts
 {
     public interface IActivityService
     {
-        Task<IEnumerable<ActivityDto>> GetActivities();
+        Task<List<ActivityDto>> GetActivities();
         Task<ActivityDto> GetActivity(int id);
     }
 }

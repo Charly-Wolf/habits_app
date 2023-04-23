@@ -6,9 +6,9 @@ namespace HabitsApp.Server.Repositories.Contracts
     public interface ICalendarEntryRepository
     {
         // GET Methods
-        Task<IEnumerable<CalendarEntry>> GetCalendarEntries();
-        Task<IEnumerable<Activity>> GetCalendarEntryActivities();
-        Task<IEnumerable<Category>> GetCalendarEntryActivityCategories();
+        Task<List<CalendarEntry>> GetCalendarEntries();
+        Task<List<Activity>> GetCalendarEntryActivities();
+        Task<List<Category>> GetCalendarEntryActivityCategories();
         Task<CalendarEntry> GetCalendarEntry(int id);
         Task<Activity> GetCalendarEntryActivity(int id);
         Task<Category> GetCalendarEntryActivityCategory(int id);

@@ -5,6 +5,6 @@ namespace HabitsApp.Client.Services.Contracts
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetCategories();
+        Task<List<Category>> GetCategories();
     }
 }

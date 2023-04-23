@@ -4,7 +4,7 @@ namespace HabitsApp.Server.Repositories.Contracts
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetCategories();
+        Task<List<Category>> GetCategories();
         Task<Category> GetCategory(int id);
     }
 }

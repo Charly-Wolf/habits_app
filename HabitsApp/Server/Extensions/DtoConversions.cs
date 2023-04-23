@@ -6,8 +6,8 @@ namespace HabitsApp.Server.Extensions
 {
     public static class DtoConversions
     {
-        public static IEnumerable<ActivityDto> ConvertToDto(this IEnumerable<Activity> activities,
-                                                            IEnumerable<Category> categories)
+        public static List<ActivityDto> ConvertToDto(this List<Activity> activities,
+                                                            List<Category> categories)
         {
             return (from activity in activities
                     join category in categories
@@ -35,7 +35,7 @@ namespace HabitsApp.Server.Extensions
         }
 
         // Overload (adapt previous method to a collection of Calendar Entries, instead of a collection of activities):
-        public static IEnumerable<CalendarEntryDto> ConvertToDto(this IEnumerable<CalendarEntry> calendarEntries, IEnumerable<ActivityDto> activities)
+        public static List<CalendarEntryDto> ConvertToDto(this List<CalendarEntry> calendarEntries, List<ActivityDto> activities)
         {
             return (from calendarEntry in calendarEntries
                     join activity in activities
@@ -70,7 +70,7 @@ namespace HabitsApp.Server.Extensions
             };
         }
 
-        public static IEnumerable<GoalDto> ConvertToDto(this IEnumerable<Goal> goals, IEnumerable<Activity> activities) 
+        public static List<GoalDto> ConvertToDto(this List<Goal> goals, List<Activity> activities) 
         {
             return (from goal in goals
                     join activity in activities

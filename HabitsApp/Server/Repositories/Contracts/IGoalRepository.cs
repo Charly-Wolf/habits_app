@@ -6,8 +6,8 @@ namespace HabitsApp.Server.Repositories.Contracts
     public interface IGoalRepository
     {
         // GET Methods
-        Task<IEnumerable<Goal>> GetGoals();
-        Task<IEnumerable<Activity>> GetGoalActivities();
+        Task<List<Goal>> GetGoals();
+        Task<List<Activity>> GetGoalActivities();
         Task<Goal> GetGoal(int id);
         //Task<Activity> GetGoalActivity(int id);
 

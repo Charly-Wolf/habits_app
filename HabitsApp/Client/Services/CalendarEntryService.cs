@@ -33,11 +33,11 @@ namespace HabitsApp.Client.Services
             }
         }
 
-        public async Task<IEnumerable<CalendarEntryDto>> GetCalendarEntries()
+        public async Task<List<CalendarEntryDto>> GetCalendarEntries()
         {
 			try
 			{
-                var calendarEntries = await httpClient.GetFromJsonAsync<IEnumerable<CalendarEntryDto>>("api/CalendarEntry");
+                var calendarEntries = await httpClient.GetFromJsonAsync<List<CalendarEntryDto>>("api/CalendarEntry");
 
                 return calendarEntries;
             }

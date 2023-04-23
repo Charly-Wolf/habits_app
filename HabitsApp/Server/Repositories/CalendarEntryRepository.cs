@@ -19,7 +19,7 @@ namespace HabitsApp.Server.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<CalendarEntry>> GetCalendarEntries()
+        public async Task<List<CalendarEntry>> GetCalendarEntries()
         {
             var calendarEntries = await habitsAppDbContext.CalendarEntries.ToListAsync();
             return calendarEntries;
@@ -44,13 +44,13 @@ namespace HabitsApp.Server.Repositories
             return calendarEntry;
         }
 
-        public async Task<IEnumerable<Activity>> GetCalendarEntryActivities()
+        public async Task<List<Activity>> GetCalendarEntryActivities()
         {
             var calendarEntryActivities = await habitsAppDbContext.Activities.ToListAsync();
             return calendarEntryActivities;
         }
 
-        public async Task<IEnumerable<Category>> GetCalendarEntryActivityCategories()
+        public async Task<List<Category>> GetCalendarEntryActivityCategories()
         {
             var calendarEntryActivityCategories = await habitsAppDbContext.Categories.ToListAsync();
             return calendarEntryActivityCategories;
