@@ -25,9 +25,8 @@ namespace HabitsApp.Client.Components
             if (ActivityService != null && GoalsService != null)
             {
                 Activities = await ActivityService.GetActivities();
-                //ActivityDtos = ActivityDtos.OrderBy(activity => activity.Name);
+                Activities = Activities.OrderBy(activity => activity.Name);
                 Goals = await GoalsService.GetGoals();
-                //GoalDtos = GoalDtos.OrderBy(goal => goal.Date);
             }
         }
         async Task InsertRow() // Creates a new GoalDto that will be added (POST Request) to the DB if saved
