@@ -16,7 +16,7 @@ namespace HabitsApp.Server.Repositories
         }
         public async Task<Goal> AddGoal(GoalDto newGoal)
         {
-            var goal = await (from g in habitsAppDbContext.Goals
+            var goal = await (from g in habitsAppDbContext.Goals // BUG: add goal does not work
                               join activity in habitsAppDbContext.Activities
                               on g.ActivityId equals activity.Id
                               where g.Id == newGoal.Id
