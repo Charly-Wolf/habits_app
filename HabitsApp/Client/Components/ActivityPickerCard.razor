@@ -2,7 +2,7 @@
 
 <div class="rz-p-sm-12 rz-text-align-center">
     <RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 420px">          
-    @if (Activities == null)
+    @if (AllActivities == null)
     {
         <h3>Loading ...</h3>
         <DisplayLoadingSpinner />
@@ -15,7 +15,7 @@
                     <RadzenDropDown TValue="string" Data=@Categories TextProperty="Name"
                                 Style = "width: 100%"
                                 ValueProperty="Name"
-                                Placeholder="Select Category"
+                                Placeholder="All categories"
                                 Change=@OnChangeCatDropdownOption
                                 Visible=@CatDropDownVisible />
 

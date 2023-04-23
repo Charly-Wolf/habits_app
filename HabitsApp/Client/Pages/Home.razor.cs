@@ -7,7 +7,7 @@ namespace HabitsApp.Client.Pages
 {
     public partial class Home
     {
-        public IEnumerable<ActivityDto>? Activities { get; set; }
+        public List<ActivityDto>? Activities { get; set; }
         public IEnumerable<Category>? Categories { get; set; }
         public IEnumerable<GoalDto>? Goals { get; set; }
         [Inject] public IActivityService? ActivityService { get; set; }
@@ -23,7 +23,7 @@ namespace HabitsApp.Client.Pages
                 Categories = await CategoryService.GetCategories();
                 Categories = Categories.OrderBy(category => category.Name);
                 Activities = await ActivityService.GetActivities();
-                Activities = Activities.OrderBy(activity => activity.Name);
+                //Activities = Activities.OrderBy(activity => activity.Name);
                 Goals = await GoalService.GetGoals();
             }
         }

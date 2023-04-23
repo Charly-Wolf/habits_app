@@ -10,8 +10,8 @@ namespace HabitsApp.Client.Components
 {
     public partial class ActivityPickerCard
     {
-        [Parameter] public IEnumerable<ActivityDto>? Activities { get; set; }
-        public List<ActivityDto>? ActivitiesInSelectedCategory = new List<ActivityDto>();
+        [Parameter] public List<ActivityDto>? AllActivities { get; set; }
+        [Parameter] public List<ActivityDto>? ActivitiesInSelectedCategory { get; set; }
         [Parameter] public IEnumerable<Category>? Categories { get; set; }
         [Parameter] public IEnumerable<GoalDto>? Goals { get; set; }
         [Parameter] public ActivityDto? SelectedActivity { get; set; }
@@ -61,7 +61,7 @@ namespace HabitsApp.Client.Components
         {
             CardTitle = InitialCardTitle;
 
-            if (Categories != null && value != null && Activities != null)
+            if (Categories != null && value != null && AllActivities != null)
             {
                 foreach (var category in Categories) 
                 {
@@ -77,7 +77,7 @@ namespace HabitsApp.Client.Components
                 }
 
                 ActivitiesInSelectedCategory = new List<ActivityDto>();
-                foreach (var activity in Activities)
+                foreach (var activity in AllActivities)
                 {
                     if (activity.CategoryName == SelectedCategory?.Name)
                     {
