@@ -59,7 +59,7 @@ namespace HabitsApp.Client.Components
 
         public async void OnChangeCatDropdownOption(object value)
         {
-            CardTitle = InitialCardTitle;
+            CardTitle = InitialCardTitle; 
 
             if (Categories != null && value != null && AllActivities != null)
             {
@@ -74,6 +74,11 @@ namespace HabitsApp.Client.Components
                        
                         break;
                     }          
+                }
+                if (SelectedActivity == null) // Deactivate Start button if the category was initially empty, an activity was chosen, and then the category was chosen
+                {
+                    StartBtnVisible = false;
+                    StatsBtnVisible = false;
                 }
 
                 ActivitiesInSelectedCategory = new List<ActivityDto>();
