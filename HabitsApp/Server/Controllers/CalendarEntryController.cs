@@ -116,5 +116,28 @@ namespace HabitsApp.Server.Controllers
                 throw;
             }
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<CalendarEntryDto>> DeleteGoal(int id)
+        {
+            try
+            {
+                var entryToDelete = await calendarEntryRepository.DeleteCalendarEntry(id);
+                if (entryToDelete == null) { return NotFound(); }
+
+                var entryActivityDto = await activityRepository.GetActivity(entryToDelete.ActivityId);
+                if (entryActivityDto == null) { return NotFound(); }
+
+                var entryActivityCategory = await categoryRepository.GetCategory(entryActivityDto.CategoryId);
+
+                var entryToDeleteDto = entryToDelete.ConvertToDto(entryActivityDto.ConvertToDto(entryActivityCategory));
+
+                return Ok(entryToDeleteDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

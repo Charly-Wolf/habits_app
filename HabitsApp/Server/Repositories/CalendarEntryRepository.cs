@@ -90,9 +90,16 @@ namespace HabitsApp.Server.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<CalendarEntry> DeleteCalendarEntry(int id)
+        public async Task<CalendarEntry> DeleteCalendarEntry(int id)
         {
-            throw new NotImplementedException();
+            var entryToDelete = await habitsAppDbContext.CalendarEntries.FindAsync(id);
+
+            if (entryToDelete != null)
+            {
+                habitsAppDbContext.CalendarEntries.Remove(entryToDelete);
+                await habitsAppDbContext.SaveChangesAsync();
+            }
+            return entryToDelete;
         }
     }
 }

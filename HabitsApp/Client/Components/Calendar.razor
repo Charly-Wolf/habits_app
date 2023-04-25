@@ -50,21 +50,21 @@ else
                 </Template>
             </RadzenDataGridColumn>
             @*<RadzenDataGridColumn TItem="CalendarEntryDto" Property="Comment" Title="Comment" Width="80px" TextAlign="TextAlign.Center" />*@
-            <RadzenDataGridColumn TItem="CalendarEntryDto" Context="entry" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="30px">
+            <RadzenDataGridColumn TItem="CalendarEntryDto" Context="entry" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="40px">
                 <Template Context="entry">
                     <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" 
                                   Click="@(args => EditRow(entry))" @onclick:stopPropagation="true">
                     </RadzenButton>
-                    @*<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entry))" @onclick:stopPropagation="true">*@
-                    @*</RadzenButton>*@
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entry))" @onclick:stopPropagation="true">
+                    </RadzenButton>
                 </Template>
                 <EditTemplate Context="entry">
                     @*<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(order))">
                     </RadzenButton>*@
                     <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(entry))">
                     </RadzenButton>
-                    @*<RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(order))">
-                    </RadzenButton>*@
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entry))">
+                    </RadzenButton>
                 </EditTemplate>
             </RadzenDataGridColumn>
         </Columns>

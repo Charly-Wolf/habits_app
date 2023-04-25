@@ -33,6 +33,26 @@ namespace HabitsApp.Client.Services
             }
         }
 
+        public async Task<CalendarEntryDto> DeleteCalendarEntry(int id)
+        {
+            try
+            {
+                var response = await httpClient.DeleteAsync($"api/CalendarEntry/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<CalendarEntryDto>();
+                }
+
+                return default(CalendarEntryDto);
+            }
+            catch (Exception)
+            {
+                // Log exception
+                throw;
+            }
+        }
+
         public async Task<List<CalendarEntryDto>> GetCalendarEntries()
         {
 			try

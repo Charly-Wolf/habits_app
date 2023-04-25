@@ -7,5 +7,6 @@ namespace HabitsApp.Client.Services.Contracts
         Task<List<CalendarEntryDto>> GetCalendarEntries();
         Task<CalendarEntryDto> GetCalendarEntry(int id);
         Task<CalendarEntryDto> AddCalendarEntry(CalendarEntryDto entry);
+        Task<CalendarEntryDto> DeleteCalendarEntry(int id);
     }
 }

@@ -49,8 +49,7 @@ namespace HabitsApp.Server.Repositories
         public async Task<Goal> DeleteGoal(int id)
         {
             var goalToDelete = await habitsAppDbContext.Goals.FindAsync(id);
-
-            if(goalToDelete != null) 
+            if (goalToDelete != null) 
             {
                 habitsAppDbContext.Goals.Remove(goalToDelete);
                 await habitsAppDbContext.SaveChangesAsync();

@@ -1,4 +1,6 @@
-﻿using HabitsApp.Client.Services.Contracts;
+﻿using HabitsApp.Client.Pages;
+using HabitsApp.Client.Services;
+using HabitsApp.Client.Services.Contracts;
 using HabitsApp.Models.Dtos;
 using Microsoft.AspNetCore.Components;
 using Radzen.Blazor;
@@ -11,7 +13,7 @@ namespace HabitsApp.Client.Components
         [Inject] public ICalendarEntryService? CalendarEntryService { get; set; }
         [Inject] public IActivityService? ActivityService { get; set; }
 
-        public IEnumerable<CalendarEntryDto>? CalendarEntries { get; set; }
+        public List<CalendarEntryDto>? CalendarEntries { get; set; }
         public IEnumerable<ActivityDto>? Activities { get; set; }
 
         CalendarEntryDto? entryToInsert;
@@ -24,11 +26,11 @@ namespace HabitsApp.Client.Components
                 Activities = await ActivityService.GetActivities();
                 Activities = Activities.OrderBy(activity  => activity.Name);
                 CalendarEntries = await CalendarEntryService.GetCalendarEntries();
-                CalendarEntries = CalendarEntries.OrderBy(entry => entry.Start); // TODO: Check if Sorting works
+                //CalendarEntries = CalendarEntries.OrderBy(entry => entry.Start); // TODO: Check if Sorting works
             }
         }
 
-        async Task EditRow(CalendarEntryDto entry) // TODO: Editing should also impact in the goals, if I delete an entry or change the duration for a shorter one as the goal, then goal should be marked as not completed
+        async Task EditRow(CalendarEntryDto entry) // TODO: Editing should also impact in the entries, if I delete an entry or change the duration for a shorter one as the entry, then entry should be marked as not completed
         {
             entryToUpdate = entry;
             if (entriesGrid != null) 
@@ -49,6 +51,43 @@ namespace HabitsApp.Client.Components
             entriesGrid?.CancelEditRow(entry);
 
             // TODO: update UI if cancelled
+        }
+
+        async Task DeleteRow(CalendarEntryDto entryToDelete) // When Pressing the Delete Button
+        {
+            if (entryToDelete == entryToInsert)
+            {
+                entryToInsert = null;
+            }
+
+            if (entryToDelete == entryToUpdate)
+            {
+                entryToUpdate = null;
+            }
+
+            if (CalendarEntries != null && CalendarEntries.Contains(entryToDelete) && entriesGrid != null && CalendarEntryService != null)
+            {
+                await CalendarEntryService.DeleteCalendarEntry(entryToDelete.Id); // DELETE Method
+                removeCalendarEntryFromGrid(entryToDelete.Id); // Update UI
+                await entriesGrid.Reload();
+            }
+            else
+            {
+                entriesGrid?.CancelEditRow(entryToDelete);
+                await entriesGrid.Reload();
+            }
+        }
+
+        // Helper Methods for the UI
+        private CalendarEntryDto GetCalendarEntry(int id)
+        {
+            return CalendarEntries.FirstOrDefault(g => g.Id == id); // The arrow function works as a ForEach loop
+        }
+        private void removeCalendarEntryFromGrid(int id)
+        {
+            var goalToRemove = GetCalendarEntry(id);
+
+            CalendarEntries?.Remove(goalToRemove);
         }
     }
 }
