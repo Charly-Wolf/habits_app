@@ -10,10 +10,12 @@ namespace HabitsApp.Server.Controllers
     public class ActivityController : ControllerBase
     {
         private readonly IActivityRepository activityRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public ActivityController(IActivityRepository activityRepository)
+        public ActivityController(IActivityRepository activityRepository, ICategoryRepository categoryRepository)
         {
             this.activityRepository = activityRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         [HttpGet]
@@ -68,6 +70,33 @@ namespace HabitsApp.Server.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ActivityDto>> PostActivity([FromBody] ActivityDto activityToAddDto)
+        {
+            try
+            {
+                var newActivity = await activityRepository.PostActivity(activityToAddDto);
+                if (newActivity == null)
+                {
+                    return NoContent();
+                }
+
+                var newActivityCategory = await categoryRepository.GetCategory(activityToAddDto.CategoryId);
+                if (newActivityCategory == null)
+                {
+                    throw new Exception($"Something went wrong when attempting to retrieve Category (categoryId:({activityToAddDto.CategoryId})");
+                }
+
+                var newActivityDto = newActivity.ConvertToDto(newActivityCategory);
+
+                return CreatedAtAction(nameof(GetActivity), new {id=newActivityDto.Id }, newActivityDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

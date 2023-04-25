@@ -68,5 +68,33 @@ namespace HabitsApp.Client.Services
                 throw;
             }
         }
+
+        public async Task<ActivityDto> AddActivity(ActivityDto activityToAddDto)
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync<ActivityDto>("api/Activity", activityToAddDto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return default(ActivityDto);
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<ActivityDto>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Http status: {response.StatusCode} - {message}");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

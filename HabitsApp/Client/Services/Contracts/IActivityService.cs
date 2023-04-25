@@ -6,5 +6,6 @@ namespace HabitsApp.Client.Services.Contracts
     {
         Task<List<ActivityDto>> GetActivities();
         Task<ActivityDto> GetActivity(int id);
+        Task<ActivityDto> AddActivity(ActivityDto activityToAddDto);
     }
 }
