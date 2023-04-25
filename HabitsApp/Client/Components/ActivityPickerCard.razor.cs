@@ -4,7 +4,9 @@ using HabitsApp.Models.Dtos;
 using HabitsApp.Shared.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Microsoft.VisualBasic;
 using Radzen;
+using System.ComponentModel.Design;
 
 namespace HabitsApp.Client.Components
 {
@@ -82,16 +84,19 @@ namespace HabitsApp.Client.Components
                 }
 
                 // Update Selected Activity
-                SelectedActivity = ActivitiesInSelectedCategory.First();
-                if (ActivitiesInSelectedCategory != null)
-                {
-                    StartBtnVisible = true;
-                    StatsBtnVisible = true;
-                    await OnSelectedActivityChanged.InvokeAsync(SelectedActivity); // Pass Data (activity) to Parent Component
-                    PathToActStats = "/ActivityDetails/" + SelectedActivity.Id;
-                    
-                }
-                CardTitle = PickedTitle + SelectedActivity?.Name;
+                //SelectedActivity = ActivitiesInSelectedCategory.First();
+                StartBtnVisible = false;
+                StatsBtnVisible = false;
+                //if (ActivitiesInSelectedCategory != null)
+                //{
+                //    StartBtnVisible = true;
+                //    StatsBtnVisible = true;
+                //    //await OnSelectedActivityChanged.InvokeAsync(SelectedActivity); // Pass Data (activity) to Parent Component
+                //    //PathToActStats = "/ActivityDetails/" + SelectedActivity.Id;
+
+                //}
+                //CardTitle = PickedTitle + SelectedActivity?.Name;
+                CardTitle = InitialCardTitle;
             }
         }
 
@@ -114,7 +119,19 @@ namespace HabitsApp.Client.Components
                 if (!StatsBtnVisible) StatsBtnVisible = true;
             }
             PathToActStats = "/ActivityDetails/" + SelectedActivity?.Id;
-            Console.WriteLine($"Selected Activity: {SelectedActivity?.Name}");
+
+            //Update Category according to the Selected Activity
+            //if (Categories != null)
+            //{
+            //    foreach (var cat in Categories)
+            //    {
+            //        if (cat.Id == SelectedActivity?.CategoryId)
+            //        {
+            //            SelectedCategory = cat;
+            //            break;
+            //        }
+            //    }
+            //}
         }
 
         public async Task AddEntryToCalendar(CalendarEntryDto calendarEntryToAddDt)
