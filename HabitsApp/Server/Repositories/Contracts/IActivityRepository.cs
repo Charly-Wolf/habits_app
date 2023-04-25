@@ -1,4 +1,5 @@
-﻿using HabitsApp.Shared.Entities;
+﻿using HabitsApp.Models.Dtos;
+using HabitsApp.Shared.Entities;
 
 namespace HabitsApp.Server.Repositories.Contracts
 {
@@ -8,5 +9,6 @@ namespace HabitsApp.Server.Repositories.Contracts
         Task<List<Category>> GetActivityCategories();
         Task<Activity> GetActivity(int id);
         Task<Category> GetActivityCategory(int id);
+        Task<Activity> PostActivity(ActivityDto activityToAddDto);
     }
 }

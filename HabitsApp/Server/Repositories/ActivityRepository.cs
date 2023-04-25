@@ -1,4 +1,5 @@
-﻿using HabitsApp.Server.Data;
+﻿using HabitsApp.Models.Dtos;
+using HabitsApp.Server.Data;
 using HabitsApp.Server.Repositories.Contracts;
 using HabitsApp.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,46 @@ namespace HabitsApp.Server.Repositories
         {
             var categories = await habitsAppDbContext.Categories.ToListAsync();
             return categories;
+        }
+
+        private async Task<bool> activityAlreadExists(int actId, int catId, string actName)
+        {
+            var exactActExists = await habitsAppDbContext.Activities.AnyAsync(a => a.Id == actId &&
+                                                                              a.CategoryId == catId);
+            var sameNameActExists = await habitsAppDbContext.Activities.AnyAsync(a => a.Name == actName &&
+                                                                                 a.CategoryId == catId);
+            return (exactActExists || sameNameActExists);
+        }
+        public async Task<Activity> PostActivity(ActivityDto activityToAddDto)
+        {
+            if (activityToAddDto.Name != null)
+            {
+                if (await activityAlreadExists( // Check if this activity already exists TODO: Handle it in the FRONT END
+                    activityToAddDto.Id, 
+                    activityToAddDto.CategoryId, 
+                    activityToAddDto.Name) == false)
+                {
+                    var activity = await (from category in habitsAppDbContext.Categories
+                                          where category.Id == activityToAddDto.CategoryId
+                                          select new Activity
+                                          {
+                                              Id = activityToAddDto.Id,
+                                              CategoryId = activityToAddDto.CategoryId,
+                                              Category = category,
+                                              Name = activityToAddDto.Name
+                                          }).SingleOrDefaultAsync();
+
+                    if (activity != null)
+                    {
+                        var result = await habitsAppDbContext.Activities.AddAsync(activity);
+                        await habitsAppDbContext.SaveChangesAsync();
+                        return result.Entity;
+                    }
+                }
+            } 
+            
+            // If the activity was not successfully added to the DB
+            return null;
         }
     }
 }
