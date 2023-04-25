@@ -57,7 +57,7 @@ namespace HabitsApp.Client.Components
 
         private DisplayTimer? timerClock;
 
-        public async void OnChangeCatDropdownOption(object value)
+        public async void OnChangeCatDropdown(object value)
         {
             CardTitle = InitialCardTitle; 
 
@@ -67,18 +67,9 @@ namespace HabitsApp.Client.Components
                 {
                     if (category.Name == value.ToString())
                     {
-                        await OnSelectedCategoryChanged.InvokeAsync(category); // Pass Data (category) to Parent Component
-                        
-                        SelectedActivity = null; // Erase selected activity
-                        await OnSelectedActivityChanged.InvokeAsync(SelectedActivity); 
-                       
+                        await OnSelectedCategoryChanged.InvokeAsync(category); // Pass Data (category) to Parent Component                                  
                         break;
                     }          
-                }
-                if (SelectedActivity == null) // Deactivate Start button if the category was initially empty, an activity was chosen, and then the category was chosen
-                {
-                    StartBtnVisible = false;
-                    StatsBtnVisible = false;
                 }
 
                 ActivitiesInSelectedCategory = new List<ActivityDto>();
@@ -89,10 +80,22 @@ namespace HabitsApp.Client.Components
                         ActivitiesInSelectedCategory?.Add(activity); // Activites in ActDropDown are only the ones belonging to the selected Category
                     }
                 }
+
+                // Update Selected Activity
+                SelectedActivity = ActivitiesInSelectedCategory.First();
+                if (ActivitiesInSelectedCategory != null)
+                {
+                    StartBtnVisible = true;
+                    StatsBtnVisible = true;
+                    await OnSelectedActivityChanged.InvokeAsync(SelectedActivity); // Pass Data (activity) to Parent Component
+                    PathToActStats = "/ActivityDetails/" + SelectedActivity.Id;
+                    
+                }
+                CardTitle = PickedTitle + SelectedActivity?.Name;
             }
         }
 
-        public async void OnChangeActDropdownOption(object value)
+        public async void OnChangeActDropdown(object value)
         {
             if (ActivitiesInSelectedCategory != null && value != null)
             {
@@ -168,7 +171,7 @@ namespace HabitsApp.Client.Components
 
         public async void MarkGoalAsCompleted()
         {
-            if (Goals != null) 
+            if (Goals != null && newCalendarEntry != null) 
             {
                 Console.WriteLine($"Total minutes elapsed: {(newCalendarEntry.End - newCalendarEntry.Start).TotalMinutes}");
                 foreach (var goalToUpdate in Goals)

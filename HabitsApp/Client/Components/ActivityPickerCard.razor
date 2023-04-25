@@ -16,7 +16,7 @@
                                 Style = "width: 100%"
                                 ValueProperty="Name"
                                 Placeholder="All categories"
-                                Change=@OnChangeCatDropdownOption
+                                Change=@OnChangeCatDropdown
                                 Visible=@CatDropDownVisible />
 
                     @*<RadzenDropDown TValue="string" Data=@Categories TextProperty="Name"
@@ -34,10 +34,10 @@
                     <RadzenButton Click=@OnClickAcceptCatBtn Icon="check_circle" ButtonStyle="ButtonStyle.Success" Visible=@AcceptCatBtnVisible />*@
             </RadzenRow>
             <RadzenRow>
-                    <RadzenDropDown TValue="string" Data=@ActivitiesInSelectedCategory TextProperty="Name"
-                                ValueProperty="Name" Style="width: 100%; max-width: 400px;"
+                    <RadzenDropDown @bind-Value=SelectedActivity Data=@ActivitiesInSelectedCategory TextProperty="Name"
+                                 Style="width: 100%; max-width: 400px;"
                                 Placeholder="Select Activity"
-                                Change="@OnChangeActDropdownOption"
+                                Change="@OnChangeActDropdown"
                                 Visible=@ActDropDownVisible />
 
                     @*<RadzenTextBox Visible=@ActTextBoxVisible Style="width: 100%" Placeholder="New Activity" Value=@ActTextBoxText />*@
