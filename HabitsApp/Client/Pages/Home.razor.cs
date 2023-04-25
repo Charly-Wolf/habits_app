@@ -13,7 +13,8 @@ namespace HabitsApp.Client.Pages
         [Inject] public IActivityService? ActivityService { get; set; }
         [Inject] public ICategoryService? CategoryService { get; set; }
         [Inject] public IGoalService? GoalService { get; set; }
-        public ActivityDto? ActiveActivity = null;
+        //public ActivityDto? ActiveActivity = null;
+        public ActivityDto? ActiveActivity { get; set; }
         public Category? ActiveCategory = null;
 
         protected override async Task OnInitializedAsync()
@@ -31,6 +32,7 @@ namespace HabitsApp.Client.Pages
         public void UpdateActiveActivity(ActivityDto activity)
         {
             ActiveActivity = activity;
+            Console.WriteLine($"---SELECTED ACTIVITY: {ActiveActivity.Name}");
         }
 
         public void UpdateActiveCategory(Category category) 

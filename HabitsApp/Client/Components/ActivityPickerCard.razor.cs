@@ -106,7 +106,6 @@ namespace HabitsApp.Client.Components
                     if (activity.Name == value.ToString())
                     {
                         await OnSelectedActivityChanged.InvokeAsync(activity); // Pass Data (activity) to Parent Component
-                        PathToActStats = "/ActivityDetails/" + activity.Id;
                         break;
                     }
                 }
@@ -114,6 +113,8 @@ namespace HabitsApp.Client.Components
 
                 if (!StatsBtnVisible) StatsBtnVisible = true;
             }
+            PathToActStats = "/ActivityDetails/" + SelectedActivity?.Id;
+            Console.WriteLine($"Selected Activity: {SelectedActivity?.Name}");
         }
 
         public async Task AddEntryToCalendar(CalendarEntryDto calendarEntryToAddDt)
