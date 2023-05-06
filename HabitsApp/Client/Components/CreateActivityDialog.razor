@@ -2,116 +2,46 @@
 @using HabitsApp.Shared.Entities;
 
 <RadzenCard Style="width: 20vw;" Visible=@AddActivityDialogVisible>
-    <RadzenText TextStyle="TextStyle.H4">
+    <RadzenText TextStyle="TextStyle.H5" Style="text-align: center">
         New Activity
     </RadzenText>
-    <RadzenDropDown @bind-Value=NewActivityCategoryId 
-                    Data=@Categories 
-                    TextProperty="Name"
-                    Style="width: 100%"
-                    ValueProperty="Id"
-                    Placeholder="All categories" />
+    <RadzenTemplateForm TItem=ActivityDto Data=NewActivityDto Submit=SaveActivity >
+        <RadzenDropDown Data=@Categories
+                        TValue="string"
+                        Change=OnChangeCategory
+                        TextProperty="Name"
+                        Style="width: 100%"
+                        ValueProperty="Name"
+                        Placeholder="Select Category"
+                        class="my-2"/>
 
-    <RadzenTextBox @bind-Value=NewActivityName 
-                   Placeholder="Enter new Activity"
-                   Style="width: 100%"/>
+        <RadzenTextBox @bind-Value=NewActivityDto.Name
+                        Placeholder="Enter new Activity"
+                        Style="width: 100%"
+                        Name="ActivityName" />
 
-    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" 
-                  Variant="Variant.Flat" 
-                  Size="ButtonSize.Medium" 
-                  Click="@SaveActivity">
-    </RadzenButton>
+        <RadzenRequiredValidator Component="ActivityName"
+                                    Text="Activity name is required"
+                                    Popup=true
+                                    Style="position: absolute"
+                                    @ref="ActivityNameValidator" />
 
-    <RadzenButton Icon="close" 
-                  ButtonStyle="ButtonStyle.Light" 
-                  Variant="Variant.Flat" 
-                  Size="ButtonSize.Medium"
-                  class="my-1 ms-1" Click=CancelAddActivity >
-    </RadzenButton>
+        <div style="text-align: center; margin: 2vw 0 1vw 0">
+            <RadzenButton ButtonType="ButtonType.Submit"
+                          Icon="check" ButtonStyle="ButtonStyle.Success"
+                          Variant="Variant.Flat"
+                          Size="ButtonSize.Medium"
+                          Disabled=SaveBtnDisabled />
+
+            <RadzenButton Icon="close"
+                          ButtonStyle="ButtonStyle.Light"
+                          Variant="Variant.Flat"
+                          Size="ButtonSize.Medium"
+                          class="my-1 ms-1"
+                          Click=CancelAddActivity />
+        </div>      
+    </RadzenTemplateForm>
+
+    
 
 </RadzenCard>
-
-
-@code 
-{
-    
-}
-
-@*<RadzenGrid Style="height: 100vh;"
-           ColumnWidth="250px, 250px, 1fr"
-           TemplateColumnWidth="5"
-           TemplateColumnTemplate="card-template"
-           RowHeight="250px"
-           Data="@data">
-    <Templates>
-        <RadzenTemplate Context="item">
-            <div class="d-flex">
-                <RadzenCard Style="width: 100%; margin-right: 10px;" Header="@data[0].Header1">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>@data[1].Content1</p>
-                        </div>
-                    </div>
-                </RadzenCard>
-
-                <RadzenCard Style="width: 100%;" Header="@data[0].Header2">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>@data[0].Content2</p>
-                        </div>
-                    </div>
-                </RadzenCard>
-            </div>
-        </RadzenTemplate>
-
-        <RadzenTemplate Context="item">
-            <RadzenCard Style="width: 100%;" Header="@data[0].Header3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>@data[1].Content3</p>
-                    </div>
-                </div>
-            </RadzenCard>
-        </RadzenTemplate>
-
-        <RadzenTemplate Context="item" Name="card-template">
-            <div class="row">
-                <div class="col-md-5">
-                    <RadzenCard Header="@data[0].Header1">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p>@data[0].Content1</p>
-                            </div>
-                        </div>
-                    </RadzenCard>
-                </div>
-            </div>
-        </RadzenTemplate>
-    </Templates>
-</RadzenGrid>
-
-@code {
-    private List<Item> data = new List<Item>
-    {
-        new Item
-        {
-            Header1 = "Header 1",
-            Content1 = "Content 1",
-            Header2 = "Header 2",
-            Content2 = "Content 2",
-            Header3 = "Header 3",
-            Content3 = "Content 3"
-        }
-    };
-
-    private class Item
-    {
-        public string Header1 { get; set; }
-        public string Content1 { get; set; }
-        public string Header2 { get; set; }
-        public string Content2 { get; set; }
-        public string Header3 { get; set; }
-        public string Content3 { get; set; }
-    }
-}
-*@

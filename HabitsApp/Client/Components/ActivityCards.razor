@@ -13,7 +13,9 @@ else
                     @*Click="@OpenNewActivityDialog" Disabled=@(activityToInsert != null || actiityToUpdate != null) />*@
     </RadzenRow>
 
-    <CreateActivityDialog AddActivityDialogVisible=CreateActivityVisible CloseAddActivityDialog=ToggleNewActivityDialog />
+    <div class="d-flex justify-content-center" style="margin-bottom: 2vw">
+        <CreateActivityDialog AddActivityDialogVisible=CreateActivityVisible CloseAddActivityDialog=ToggleNewActivityDialog />
+    </div>
 
     <RadzenStack Orientation=@orientation Wrap=@flexWrap>
         @foreach (var activity in Activities)
