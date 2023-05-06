@@ -1,10 +1,20 @@
-﻿@if (Activities == null)
+﻿@inject DialogService DialogService
+
+@if (Activities == null)
 {
     <h3>Loading Activities...</h3>
     <DisplayLoadingSpinner />
 }
 else 
 {
+    <RadzenRow>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" class="mt-2 mb-4" Text="Add New Activity"
+                    Click=ToggleNewActivityDialog Disabled=AddActivityDisabled />
+                    @*Click="@OpenNewActivityDialog" Disabled=@(activityToInsert != null || actiityToUpdate != null) />*@
+    </RadzenRow>
+
+    <CreateActivityDialog AddActivityDialogVisible=CreateActivityVisible CloseAddActivityDialog=ToggleNewActivityDialog />
+
     <RadzenStack Orientation=@orientation Wrap=@flexWrap>
         @foreach (var activity in Activities)
         {

@@ -2,6 +2,7 @@
 using HabitsApp.Models.Dtos;
 using Microsoft.AspNetCore.Components;
 using Radzen;
+using Radzen.Blazor;
 
 namespace HabitsApp.Client.Components
 {
@@ -10,6 +11,8 @@ namespace HabitsApp.Client.Components
         [Inject] public IActivityService? ActivityService { get; set; }
 
         public IEnumerable<ActivityDto>? Activities { get; set; }
+        public bool CreateActivityVisible = false;
+        public bool AddActivityDisabled = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,5 +24,11 @@ namespace HabitsApp.Client.Components
 
         Orientation orientation = Orientation.Horizontal;
         FlexWrap flexWrap = FlexWrap.Wrap;
+
+        private void ToggleNewActivityDialog()
+        {
+            CreateActivityVisible = !CreateActivityVisible;
+            AddActivityDisabled = !AddActivityDisabled;
+        }
     }
 }
