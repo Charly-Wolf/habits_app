@@ -66,6 +66,7 @@ namespace HabitsApp.Client.Components
             if (goalsGrid != null)
             {
                 await goalsGrid.UpdateRow(goalToAdd);
+                Console.WriteLine($"--------NEW GOAL: Activity Id: {goalToAdd.ActivityId} Name: {goalToAdd.ActivityName} Date: {goalToAdd.Date} Duration: {goalToAdd.DurationMinutes}");
             }
             await OnInitializedAsync();
         }

@@ -30,6 +30,49 @@ namespace HabitsApp.Client.Components
             }
         }
 
+        async Task InsertRow() // Creates a new CalendarEntryDto that will be added (POST Request) to the DB if saved
+        {
+            if (entriesGrid != null)
+            {
+                entryToInsert = new CalendarEntryDto();
+                entryToInsert.Date = DateTime.Now; // Default Date for a new Goal = today
+                await entriesGrid.InsertRow(entryToInsert);
+            }
+        }
+
+        async Task SaveRow(CalendarEntryDto entryToAdd) // When clicking the SAVE BTN
+        {
+            if (entriesGrid != null)
+            {
+                await entriesGrid.UpdateRow(entryToAdd);
+            }
+            await OnInitializedAsync();
+        }
+
+        async void OnCreateRow(CalendarEntryDto newEntry) // After saving a NEW Goal
+        {
+            if (CalendarEntries != null && Activities != null)
+            {
+                foreach (var entry in CalendarEntries)
+                {
+                    foreach (var activity in Activities)
+                    {
+                        if (newEntry.ActivityId == activity.Id)
+                        {
+                            newEntry.ActivityName = activity.Name;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (CalendarEntryService != null)
+            {
+                await CalendarEntryService.AddCalendarEntry(newEntry); // POST Request
+            }
+            entryToInsert = null;
+        }
+
         async Task EditRow(CalendarEntryDto entry) // TODO: Editing should also impact in the entries, if I delete an entry or change the duration for a shorter one as the entry, then entry should be marked as not completed
         {
             entryToUpdate = entry;

@@ -8,11 +8,16 @@
 }
 else
 {
-    @*//TODO: Convert to a InLine Editing DataGrid*@
+    <RadzenRow>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" class="mt-2 mb-4" Text="Add New Calendar Entry"
+                  Click="@InsertRow" Disabled=@(entryToInsert != null || entryToUpdate != null) />
+    </RadzenRow>
+
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Simple"
                 AllowSorting="true" EditMode="DataGridEditMode.Single" PageSize="10" AllowPaging="true" 
                 PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true" Data="@CalendarEntries" TItem="CalendarEntryDto" 
-                ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" @ref="entriesGrid">
+                ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" @ref="entriesGrid"
+                RowCreate="@OnCreateRow">
         <Columns>
             <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Date" Title="Date" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:dd/MM/yy}">
                 <EditTemplate Context="entry">
@@ -28,8 +33,8 @@ else
                 </Template>
                 <EditTemplate Context="entry">
                     @*TODO: Bind Value - Activity *@
-                    <RadzenDropDown TValue="string" Data=@Activities TextProperty="Name"
-                                ValueProperty="Name" Style="width: 100%; max-width: 400px;" />
+                    <RadzenDropDown @bind-Value=entry.ActivityId TValue="int" Data=@Activities TextProperty="Name"
+                                ValueProperty="Id" Style="width: 100%; max-width: 400px;" />
                 </EditTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Start" Title="Start" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}">
@@ -59,8 +64,8 @@ else
                     </RadzenButton>
                 </Template>
                 <EditTemplate Context="entry">
-                    @*<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(order))">
-                    </RadzenButton>*@
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(entry))">
+                    </RadzenButton>
                     <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(entry))">
                     </RadzenButton>
                     <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(entry))">
