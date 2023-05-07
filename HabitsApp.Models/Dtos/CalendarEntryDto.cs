@@ -10,5 +10,8 @@
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string? Comment { get; set; }
+        public int GoalId { get; set; }
+        //public int GoalActivityId { get; set;}
+        //public string? GoalActivityName { get;set; }
     }
 }

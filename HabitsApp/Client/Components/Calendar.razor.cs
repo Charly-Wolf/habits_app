@@ -49,7 +49,7 @@ namespace HabitsApp.Client.Components
             if (entriesGrid != null)
             {
                 entryToInsert = new CalendarEntryDto();
-                entryToInsert.Date = DateTime.Now; // Default Date for a new Goal = today
+                entryToInsert.Date = DateTime.Now; // Default Date for a new Calendar Entry = today
                 await entriesGrid.InsertRow(entryToInsert);
             }
             DeleteBtnVisible = false;
@@ -66,7 +66,7 @@ namespace HabitsApp.Client.Components
             await OnInitializedAsync();
         }
 
-        async void OnCreateRow(CalendarEntryDto newEntry) // After saving a NEW Goal
+        async void OnCreateRow(CalendarEntryDto newEntry) // After saving a NEW Calendar Entry
         {
             if (CalendarEntries != null && Activities != null)
             {
@@ -157,9 +157,9 @@ namespace HabitsApp.Client.Components
         }
         private void removeCalendarEntryFromGrid(int id)
         {
-            var goalToRemove = GetCalendarEntry(id);
+            var entryToRemove = GetCalendarEntry(id);
 
-            CalendarEntries?.Remove(goalToRemove);
+            CalendarEntries?.Remove(entryToRemove);
         }
 
         public void ToggleSaveBtn()

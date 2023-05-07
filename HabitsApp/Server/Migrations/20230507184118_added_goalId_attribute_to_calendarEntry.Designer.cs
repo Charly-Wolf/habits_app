@@ -4,6 +4,7 @@ using HabitsApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HabitsApp.Server.Migrations
 {
     [DbContext(typeof(HabitsAppDbContext))]
-    partial class HabitsAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230507184118_added_goalId_attribute_to_calendarEntry")]
+    partial class added_goalId_attribute_to_calendarEntry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +44,7 @@ namespace HabitsApp.Server.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
 
                     b.HasData(
                         new
@@ -154,7 +157,7 @@ namespace HabitsApp.Server.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("CalendarEntries", (string)null);
+                    b.ToTable("CalendarEntries");
 
                     b.HasData(
                         new
@@ -229,7 +232,7 @@ namespace HabitsApp.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -294,7 +297,7 @@ namespace HabitsApp.Server.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("Goals", (string)null);
+                    b.ToTable("Goals");
 
                     b.HasData(
                         new

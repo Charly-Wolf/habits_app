@@ -8,8 +8,10 @@ namespace HabitsApp.Client.Pages
     public partial class Home
     {
         public List<ActivityDto>? Activities { get; set; }
-        public IEnumerable<Category>? Categories { get; set; }
+        public IEnumerable<Category>? AllCategories { get; set; }
+        public IEnumerable<Category>? FilteredCategories { get; set; }
         public IEnumerable<GoalDto>? Goals { get; set; }
+        
         [Inject] public IActivityService? ActivityService { get; set; }
         [Inject] public ICategoryService? CategoryService { get; set; }
         [Inject] public IGoalService? GoalService { get; set; }
@@ -21,9 +23,13 @@ namespace HabitsApp.Client.Pages
         {
             if (ActivityService != null && CategoryService != null && GoalService != null)
             {
-                Categories = await CategoryService.GetCategories();
-                Categories = Categories.OrderBy(category => category.Name);
+                AllCategories = await CategoryService.GetCategories();
+                AllCategories = AllCategories.OrderBy(category => category.Name);
                 Activities = await ActivityService.GetActivities();
+
+                var categoryIdsWithActivities = Activities.Select(a => a.CategoryId).Distinct();
+                FilteredCategories = AllCategories.Where(c => categoryIdsWithActivities.Contains(c.Id)).ToList();// Does not contain categories with no activities
+
                 //Activities = Activities.OrderBy(activity => activity.Name);
                 Goals = await GoalService.GetGoals();
             }
