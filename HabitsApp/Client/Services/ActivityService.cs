@@ -96,5 +96,25 @@ namespace HabitsApp.Client.Services
                 throw;
             }
         }
+
+        public async Task<ActivityDto> DeleteActivity(int id)
+        {
+            try
+            {
+                var response = await httpClient.DeleteAsync($"api/Activity/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<ActivityDto>();
+                }
+
+                return default(ActivityDto);
+            }
+            catch (Exception)
+            {
+                // Log exception
+                throw;
+            }
+        }
     }
 }

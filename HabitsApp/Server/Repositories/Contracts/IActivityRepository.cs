@@ -10,5 +10,6 @@ namespace HabitsApp.Server.Repositories.Contracts
         Task<Activity> GetActivity(int id);
         Task<Category> GetActivityCategory(int id);
         Task<Activity> PostActivity(ActivityDto activityToAddDto);
+        Task<Activity> DeleteActivity(int id);
     }
 }

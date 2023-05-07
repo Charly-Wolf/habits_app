@@ -38,7 +38,7 @@ namespace HabitsApp.Client.Components
         public string CalculateDuration(DateTime start, DateTime end) 
         {
             TimeSpan duration = end.Subtract(start);
-            EntryDurationString = duration.Hours > 0 ?
+            EntryDurationString = duration.Hours >= 0 ?
                 string.Format("{0:D2}h : {1:D2}m", duration.Hours, duration.Minutes, duration.Seconds) :
                 string.Format("{0:D2}m", duration.Minutes);
             return EntryDurationString;

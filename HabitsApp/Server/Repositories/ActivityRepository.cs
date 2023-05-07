@@ -79,5 +79,16 @@ namespace HabitsApp.Server.Repositories
             // If the activity was not successfully added to the DB
             return null;
         }
+
+        public async Task<Activity> DeleteActivity(int id)
+        {
+            var activityToDelete = await habitsAppDbContext.Activities.FindAsync(id);
+            if (activityToDelete != null)
+            {
+                habitsAppDbContext.Activities.Remove(activityToDelete);
+                await habitsAppDbContext.SaveChangesAsync();
+            }
+            return activityToDelete;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HabitsApp.Models.Dtos;
 using HabitsApp.Server.Extensions;
+using HabitsApp.Server.Repositories;
 using HabitsApp.Server.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -93,6 +94,28 @@ namespace HabitsApp.Server.Controllers
                 var newActivityDto = newActivity.ConvertToDto(newActivityCategory);
 
                 return CreatedAtAction(nameof(GetActivity), new {id=newActivityDto.Id }, newActivityDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<ActivityDto>> DeleteActivity(int id)
+        {
+            try
+            {
+                var activityToDelete = await activityRepository.DeleteActivity(id);
+                if (activityToDelete == null) { return NotFound(); }
+
+                var activityCategory = await categoryRepository.GetCategory(activityToDelete.CategoryId);
+
+                if (activityCategory == null) { return NotFound(); }
+
+                var activityToDeleteDto = activityToDelete.ConvertToDto(activityCategory);
+
+                return Ok(activityToDeleteDto);
             }
             catch (Exception ex)
             {
