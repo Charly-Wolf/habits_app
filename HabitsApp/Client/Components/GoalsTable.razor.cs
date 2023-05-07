@@ -3,6 +3,7 @@ using HabitsApp.Client.Services.Contracts;
 using HabitsApp.Models.Dtos;
 using HabitsApp.Shared.Entities;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 using Radzen.Blazor;
 
 namespace HabitsApp.Client.Components
@@ -14,12 +15,12 @@ namespace HabitsApp.Client.Components
         public List<GoalDto>? Goals { get; set; }
         [Inject] public IGoalService? GoalsService { get; set; }
         [Inject] public IActivityService? ActivityService { get; set; }
+        [Inject] DialogService? DialogService { get; set; }
 
         private DateTime defaultDate = new DateTime(2023, 04, 22); // DEFAULT DATE FILTER - TODO: it should be TODAY, for now as test is set to 22/04/23
 
         GoalDto? goalToInsert; // new Goal to be added to the DB (POST)
         GoalDto? goalToUpdate; // Goal to be edited in the DB (PUT)
-        public int CompletedGoals = 0;
         public string CompletedGoalsString = "";
         public bool DeleteBtnVisible = true;
 
@@ -141,12 +142,32 @@ namespace HabitsApp.Client.Components
 
         private async Task calculateCompletedGoals()
         {
+            var CompletedGoals = 0;
             if (GoalsService != null)
             {
                 Goals = await GoalsService.GetGoals();
 
                 foreach (var goal in Goals) { if (goal.IsCompleted) CompletedGoals++; }
                 CompletedGoalsString = $"Goals completed: {CompletedGoals} /  {Goals.Count()}";
+            }
+        }
+
+        public async void CheckGoal(object goal)
+        {
+            GoalDto goalToEdit = (GoalDto)goal;
+            if (DialogService != null)
+            {
+                var confirmed = (bool)await DialogService.Confirm(
+                    $"Are you sure you want to mark the goal as " +
+                    $"{(goalToEdit.IsCompleted ? "not " : "")}completed?");
+
+                if (confirmed && GoalsService != null)
+                {
+                    goalToEdit.IsCompleted = !goalToEdit.IsCompleted;
+                    await GoalsService.UpdateGoal(goalToEdit);
+                    await calculateCompletedGoals();
+                }
+                StateHasChanged();
             }
         }
     }

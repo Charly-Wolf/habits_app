@@ -51,8 +51,11 @@ else
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="GoalDto" Property="IsCompleted" Title="Completed?" Width="50px" TextAlign="TextAlign.Center">
                 <Template Context="goal">
-                    <RadzenCheckBox TValue="bool" Value="goal.IsCompleted"/>
+                    <RadzenCheckBox TValue="bool" Value=goal.IsCompleted Change=@(args => CheckGoal(goal)) />
                 </Template>
+                <EditTemplate Context="goal">
+                    <RadzenCheckBox @bind-Value=goal.IsCompleted />
+                </EditTemplate>
             </RadzenDataGridColumn>
 
             <RadzenDataGridColumn TItem="GoalDto" Context="goal" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="30px">
