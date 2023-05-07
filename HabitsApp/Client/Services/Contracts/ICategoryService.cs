@@ -8,5 +8,6 @@ namespace HabitsApp.Client.Services.Contracts
     {
         Task<List<Category>> GetCategories();
         Task<Category> GetCategory(int id);
+        Task<Category> AddCategory(Category categoryToAdd);
     }
 }

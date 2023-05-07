@@ -24,5 +24,35 @@ namespace HabitsApp.Server.Repositories
             var category = await habitsAppDbContext.Categories.FindAsync(id);
             return category;
         }
+
+        private async Task<bool> categoryAlreadExists(int catId, string catName)
+        {
+            var exactCatExists = await habitsAppDbContext.Categories.AnyAsync(c => c.Id == catId);
+            var sameNameCatExists = await habitsAppDbContext.Categories.AnyAsync(c => c.Name == catName);
+            return (exactCatExists || sameNameCatExists);
+        }
+
+        public async Task<Category> PostCategory(Category categoryToAdd)
+        {
+            if (categoryToAdd != null)
+            {
+                if (await categoryAlreadExists( // Check if this category already exists TODO: Handle it in the FRONT END
+                    categoryToAdd.Id,
+                    categoryToAdd.Name) == false)
+                {
+                    var category = new Category { Name = categoryToAdd.Name };
+
+                    if (category != null)
+                    {
+                        var result = await habitsAppDbContext.Categories.AddAsync(category);
+                        await habitsAppDbContext.SaveChangesAsync();
+                        return result.Entity;
+                    }
+                }
+            }
+
+            // If the activity was not successfully added to the DB
+            return null;
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace HabitsApp.Client.Components
         [Inject] public ICategoryService? CategoryService { get; set; }
 
         public IEnumerable<Category>? Categories { get; set; }
+        public bool CreateCategoryVisible = false;
+        public bool AddCategoryDisabled = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,5 +23,14 @@ namespace HabitsApp.Client.Components
 
         Orientation orientation = Orientation.Horizontal;
         FlexWrap flexWrap = FlexWrap.Wrap;
+
+        private async void ToggleNewCategoryCard()
+        {
+            CreateCategoryVisible = !CreateCategoryVisible;
+            AddCategoryDisabled = !AddCategoryDisabled;
+
+            await OnInitializedAsync();
+            StateHasChanged();
+        }
     }
 }

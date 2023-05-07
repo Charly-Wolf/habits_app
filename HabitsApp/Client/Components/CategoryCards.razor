@@ -7,6 +7,15 @@
 }
 else
 {
+    <RadzenRow>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" class="mt-2 mb-4" Text="Add New Category"
+                  Click=ToggleNewCategoryCard Disabled=AddCategoryDisabled />
+    </RadzenRow>
+
+    <div class="d-flex justify-content-center" style="margin-bottom: 2vw">
+        <CreateCategoryCard AddCategoryCardVisible=CreateCategoryVisible CloseAddCategoryCard=ToggleNewCategoryCard />
+    </div>
+
     <RadzenStack Orientation=@orientation Wrap=@flexWrap>
         @foreach (var category in Categories)
         {

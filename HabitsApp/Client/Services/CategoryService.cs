@@ -56,5 +56,33 @@ namespace HabitsApp.Client.Services
                 throw;
             }
         }
+
+        public async Task<Category> AddCategory(Category categoryToAdd)
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync<Category>("api/Category", categoryToAdd);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return default(Category);
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<Category>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Http status: {response.StatusCode} - {message}");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

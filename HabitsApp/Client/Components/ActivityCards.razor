@@ -9,12 +9,11 @@ else
 {
     <RadzenRow>
         <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" class="mt-2 mb-4" Text="Add New Activity"
-                    Click=ToggleNewActivityDialog Disabled=AddActivityDisabled />
-                    @*Click="@OpenNewActivityDialog" Disabled=@(activityToInsert != null || actiityToUpdate != null) />*@
+                      Click=ToggleNewActivityCard Disabled=AddActivityDisabled />
     </RadzenRow>
 
     <div class="d-flex justify-content-center" style="margin-bottom: 2vw">
-        <CreateActivityDialog AddActivityDialogVisible=CreateActivityVisible CloseAddActivityDialog=ToggleNewActivityDialog />
+        <CreateActivityCard AddActivityCardVisible=CreateActivityVisible CloseAddActivityCard=ToggleNewActivityCard />
     </div>
 
     <RadzenStack Orientation=@orientation Wrap=@flexWrap>

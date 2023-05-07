@@ -6,17 +6,16 @@ using Radzen.Blazor;
 
 namespace HabitsApp.Client.Components
 {
-    public partial class CreateActivityDialog
+    public partial class CreateActivityCard
     {
-        [Parameter] public bool AddActivityDialogVisible {get; set; }
-        [Parameter] public EventCallback CloseAddActivityDialog { get; set; }
+        [Parameter] public bool AddActivityCardVisible {get; set; }
+        [Parameter] public EventCallback CloseAddActivityCard { get; set; }
    
         [Inject] public ICategoryService? CategoryService { get; set; }
         [Inject] public IActivityService? ActivityService { get; set; }
 
         public RadzenRequiredValidator? ActivityNameValidator { get; set; }
         public IEnumerable<Category>? Categories { get; set; }
-        public string? NewActivityCategoryName { get; set; }
         public Category? SelectedCategory { get; set; }
         public bool SaveBtnDisabled = true;
         public ActivityDto? NewActivityDto = new();
@@ -38,16 +37,15 @@ namespace HabitsApp.Client.Components
                 NewActivityDto.CategoryId = SelectedCategory.Id;
                 NewActivityDto.CategoryName = SelectedCategory.Name;
                 await ActivityService.AddActivity(NewActivityDto);
-                await CloseAddActivityDialog.InvokeAsync();
+                await CloseAddActivityCard.InvokeAsync();
                 ToggleSaveBtn();
                 ClearActivityTextBox();
             }
-            Console.WriteLine($"{(ActivityNameValidator.IsValid? "VALID" : "INVALID" )}");
         }
 
         public async void CancelAddActivity()
         {
-            await CloseAddActivityDialog.InvokeAsync();
+            await CloseAddActivityCard.InvokeAsync();
             ToggleSaveBtn();
             ClearActivityTextBox();
         }

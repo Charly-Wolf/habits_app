@@ -1,0 +1,38 @@
+﻿@using HabitsApp.Client.Services.Contracts;
+@using HabitsApp.Shared.Entities;
+
+<RadzenCard Style="width: 20vw;" Visible=@AddCategoryCardVisible>
+    <RadzenText TextStyle="TextStyle.H5" Style="text-align: center">
+        New Category
+    </RadzenText>
+    <RadzenTemplateForm TItem=Category Data=NewCategory Submit=SaveCategory>
+
+        <RadzenTextBox @bind-Value=NewCategory.Name
+                       Placeholder="Enter new Category"
+                       Style="width: 100%; margin-top: 1vw"
+                       Name="CategoryName" />
+
+        <RadzenRequiredValidator Component="CategoryName"
+                                 Text="Category name is required"
+                                 Popup=true
+                                 Style="position: absolute"
+                                 @ref="CategoryNameValidator" />
+
+        <div style="text-align: center; margin: 2vw 0 1vw 0">
+            <RadzenButton ButtonType="ButtonType.Submit"
+                          Icon="check" ButtonStyle="ButtonStyle.Success"
+                          Variant="Variant.Flat"
+                          Size="ButtonSize.Medium" />
+
+            <RadzenButton Icon="close"
+                          ButtonStyle="ButtonStyle.Light"
+                          Variant="Variant.Flat"
+                          Size="ButtonSize.Medium"
+                          class="my-1 ms-1"
+                          Click=CancelAddCategory />
+        </div>
+    </RadzenTemplateForm>
+
+
+
+</RadzenCard>

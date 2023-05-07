@@ -25,7 +25,7 @@ namespace HabitsApp.Client.Components
         Orientation orientation = Orientation.Horizontal;
         FlexWrap flexWrap = FlexWrap.Wrap;
 
-        private async void ToggleNewActivityDialog()
+        private async void ToggleNewActivityCard()
         {
             CreateActivityVisible = !CreateActivityVisible;
             AddActivityDisabled = !AddActivityDisabled;

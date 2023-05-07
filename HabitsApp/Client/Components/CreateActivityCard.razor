@@ -1,12 +1,12 @@
 ﻿@using HabitsApp.Client.Services.Contracts;
 @using HabitsApp.Shared.Entities;
 
-<RadzenCard Style="width: 20vw;" Visible=@AddActivityDialogVisible>
+<RadzenCard Style="width: 20vw;" Visible=@AddActivityCardVisible>
     <RadzenText TextStyle="TextStyle.H5" Style="text-align: center">
         New Activity
     </RadzenText>
     <RadzenTemplateForm TItem=ActivityDto Data=NewActivityDto Submit=SaveActivity >
-        <RadzenDropDown Data=@Categories
+        <RadzenDropDown Data=Categories
                         TValue="string"
                         Change=OnChangeCategory
                         TextProperty="Name"
