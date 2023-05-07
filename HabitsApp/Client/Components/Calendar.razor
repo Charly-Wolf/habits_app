@@ -51,7 +51,7 @@ else
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="CalendarEntryDto" Title="Duration" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm:ss}">
                 <Template Context="entry">
-                    @((entry.End - entry.Start))
+                    @CalculateDuration(entry.Start, entry.End)
                 </Template>
             </RadzenDataGridColumn>
             @*<RadzenDataGridColumn TItem="CalendarEntryDto" Property="Comment" Title="Comment" Width="80px" TextAlign="TextAlign.Center" />*@

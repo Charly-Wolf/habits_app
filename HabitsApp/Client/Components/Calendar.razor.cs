@@ -18,6 +18,7 @@ namespace HabitsApp.Client.Components
 
         CalendarEntryDto? entryToInsert;
         CalendarEntryDto? entryToUpdate;
+        public string? EntryDurationString;
 
         protected override async Task OnInitializedAsync()
         {
@@ -28,6 +29,15 @@ namespace HabitsApp.Client.Components
                 CalendarEntries = await CalendarEntryService.GetCalendarEntries();
                 //CalendarEntries = CalendarEntries.OrderBy(entry => entry.Start); // TODO: Check if Sorting works
             }
+        }
+
+        public string CalculateDuration(DateTime start, DateTime end) 
+        {
+            TimeSpan duration = end.Subtract(start);
+            EntryDurationString = duration.Hours > 0 ?
+                string.Format("{0:D2}h : {1:D2}m", duration.Hours, duration.Minutes, duration.Seconds) :
+                string.Format("{0:D2}m", duration.Minutes);
+            return EntryDurationString;
         }
 
         async Task InsertRow() // Creates a new CalendarEntryDto that will be added (POST Request) to the DB if saved
