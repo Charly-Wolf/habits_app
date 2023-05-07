@@ -105,26 +105,37 @@ namespace HabitsApp.Client.Components
 
         async Task DeleteRow(GoalDto goalToDelete) // When Pressing the Delete Button
         {
-            if (goalToDelete == goalToInsert)
+            if (DialogService != null)
             {
-                goalToInsert = null;
-            }
+                var confirmed = (bool)await DialogService.Confirm(
+                    $"Are you sure you want to Delete the goal " +
+                    $"{goalToDelete.ActivityName}?");
 
-            if (goalToDelete == goalToUpdate)
-            {
-                goalToUpdate = null;
-            }
+                if (confirmed && goalsGrid != null)
+                {
+                    if (confirmed && GoalsService != null)
+                        if (goalToDelete == goalToInsert)
+                        {
+                            goalToInsert = null;
+                        }
 
-            if (Goals != null && Goals.Contains(goalToDelete) && goalsGrid != null && GoalsService != null)
-            {
-                await GoalsService.DeleteGoal(goalToDelete.Id); // DELETE Method
-                removeGoalFromGrid(goalToDelete.Id); // Update UI
-                await goalsGrid.Reload();
-            }
-            else
-            {
-                goalsGrid?.CancelEditRow(goalToDelete);
-                await goalsGrid.Reload();
+                    if (goalToDelete == goalToUpdate)
+                    {
+                        goalToUpdate = null;
+                    }
+
+                    if (Goals != null && Goals.Contains(goalToDelete) && GoalsService != null)
+                    {
+                        await GoalsService.DeleteGoal(goalToDelete.Id); // DELETE Method
+                        removeGoalFromGrid(goalToDelete.Id); // Update UI
+                        await goalsGrid.Reload();
+                    }
+                    else
+                    {
+                        goalsGrid.CancelEditRow(goalToDelete);
+                        await goalsGrid.Reload();
+                    }
+                }
             }
         }
 

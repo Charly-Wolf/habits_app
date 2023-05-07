@@ -3,6 +3,7 @@ using HabitsApp.Client.Services;
 using HabitsApp.Client.Services.Contracts;
 using HabitsApp.Models.Dtos;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 using Radzen.Blazor;
 
 namespace HabitsApp.Client.Components
@@ -12,6 +13,7 @@ namespace HabitsApp.Client.Components
         RadzenDataGrid<CalendarEntryDto>? entriesGrid;
         [Inject] public ICalendarEntryService? CalendarEntryService { get; set; }
         [Inject] public IActivityService? ActivityService { get; set; }
+        [Inject] public DialogService? DialogService { get; set; }
 
         public List<CalendarEntryDto>? CalendarEntries { get; set; }
         public IEnumerable<ActivityDto>? Activities { get; set; }
@@ -112,26 +114,36 @@ namespace HabitsApp.Client.Components
 
         async Task DeleteRow(CalendarEntryDto entryToDelete) // When Pressing the Delete Button
         {
-            if (entryToDelete == entryToInsert)
+            if (DialogService != null)
             {
-                entryToInsert = null;
-            }
+                var confirmed = (bool)await DialogService.Confirm(
+                    $"Are you sure you want to Delete the entry for " +
+                    $"{entryToDelete.ActivityName}?");
 
-            if (entryToDelete == entryToUpdate)
-            {
-                entryToUpdate = null;
-            }
+                if (confirmed && entriesGrid != null)
+                {
+                    if (entryToDelete == entryToInsert)
+                    {
+                        entryToInsert = null;
+                    }
 
-            if (CalendarEntries != null && CalendarEntries.Contains(entryToDelete) && entriesGrid != null && CalendarEntryService != null)
-            {
-                await CalendarEntryService.DeleteCalendarEntry(entryToDelete.Id); // DELETE Method
-                removeCalendarEntryFromGrid(entryToDelete.Id); // Update UI
-                await entriesGrid.Reload();
-            }
-            else
-            {
-                entriesGrid?.CancelEditRow(entryToDelete);
-                await entriesGrid.Reload();
+                    if (entryToDelete == entryToUpdate)
+                    {
+                        entryToUpdate = null;
+                    }
+
+                    if (CalendarEntries != null && CalendarEntries.Contains(entryToDelete) && CalendarEntryService != null)
+                    {
+                        await CalendarEntryService.DeleteCalendarEntry(entryToDelete.Id); // DELETE Method
+                        removeCalendarEntryFromGrid(entryToDelete.Id); // Update UI
+                        await entriesGrid.Reload();
+                    }
+                    else
+                    {
+                        entriesGrid.CancelEditRow(entryToDelete);
+                        await entriesGrid.Reload();
+                    }
+                }
             }
         }
 
