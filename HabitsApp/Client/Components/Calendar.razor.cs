@@ -19,6 +19,7 @@ namespace HabitsApp.Client.Components
         CalendarEntryDto? entryToInsert;
         CalendarEntryDto? entryToUpdate;
         public string? EntryDurationString;
+        public bool DeleteBtnVisible = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,6 +49,7 @@ namespace HabitsApp.Client.Components
                 entryToInsert.Date = DateTime.Now; // Default Date for a new Goal = today
                 await entriesGrid.InsertRow(entryToInsert);
             }
+            DeleteBtnVisible = false;
         }
 
         async Task SaveRow(CalendarEntryDto entryToAdd) // When clicking the SAVE BTN
@@ -56,6 +58,7 @@ namespace HabitsApp.Client.Components
             {
                 await entriesGrid.UpdateRow(entryToAdd);
             }
+            DeleteBtnVisible = true;
             await OnInitializedAsync();
         }
 
@@ -89,7 +92,8 @@ namespace HabitsApp.Client.Components
             if (entriesGrid != null) 
             {
                 await entriesGrid.EditRow(entry);
-            }    
+            }
+            DeleteBtnVisible = false;
         }
 
         void CancelEdit(CalendarEntryDto entry)
@@ -102,7 +106,7 @@ namespace HabitsApp.Client.Components
             entryToUpdate = null;
 
             entriesGrid?.CancelEditRow(entry);
-
+            DeleteBtnVisible = true;
             // TODO: update UI if cancelled
         }
 

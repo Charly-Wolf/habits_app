@@ -19,6 +19,9 @@ namespace HabitsApp.Client.Components
 
         GoalDto? goalToInsert; // new Goal to be added to the DB (POST)
         GoalDto? goalToUpdate; // Goal to be edited in the DB (PUT)
+        public int CompletedGoals = 0;
+        public string CompletedGoalsString = "";
+        public bool DeleteBtnVisible = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -27,6 +30,7 @@ namespace HabitsApp.Client.Components
                 Activities = await ActivityService.GetActivities();
                 Activities = Activities.OrderBy(activity => activity.Name);
                 Goals = await GoalsService.GetGoals();
+                await calculateCompletedGoals();
             }
         }
         async Task InsertRow() // Creates a new GoalDto that will be added (POST Request) to the DB if saved
@@ -35,6 +39,7 @@ namespace HabitsApp.Client.Components
             {
                 goalToInsert = new GoalDto();
                 goalToInsert.Date = DateTime.Now; // Default Date for a new Goal = today
+                DeleteBtnVisible = false;
                 await goalsGrid.InsertRow(goalToInsert);
             }
         }
@@ -45,6 +50,7 @@ namespace HabitsApp.Client.Components
             {
                 await goalsGrid.EditRow(goalToEdit);
             }
+            DeleteBtnVisible = false;
         }
 
         void CancelEdit(GoalDto goal)
@@ -57,6 +63,7 @@ namespace HabitsApp.Client.Components
             goalToUpdate = null;
 
             goalsGrid?.CancelEditRow(goal);
+            DeleteBtnVisible = true;
 
             // TODO: update UI if cancelled
         }
@@ -66,8 +73,8 @@ namespace HabitsApp.Client.Components
             if (goalsGrid != null)
             {
                 await goalsGrid.UpdateRow(goalToAdd);
-                Console.WriteLine($"--------NEW GOAL: Activity Id: {goalToAdd.ActivityId} Name: {goalToAdd.ActivityName} Date: {goalToAdd.Date} Duration: {goalToAdd.DurationMinutes}");
             }
+            DeleteBtnVisible = true;
             await OnInitializedAsync();
         }
 
@@ -130,6 +137,17 @@ namespace HabitsApp.Client.Components
             var goalToRemove = GetGoal(id);
 
             Goals?.Remove(goalToRemove);
+        }
+
+        private async Task calculateCompletedGoals()
+        {
+            if (GoalsService != null)
+            {
+                Goals = await GoalsService.GetGoals();
+
+                foreach (var goal in Goals) { if (goal.IsCompleted) CompletedGoals++; }
+                CompletedGoalsString = $"Goals completed: {CompletedGoals} /  {Goals.Count()}";
+            }
         }
     }
 }
