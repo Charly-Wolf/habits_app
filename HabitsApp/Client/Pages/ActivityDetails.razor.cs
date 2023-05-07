@@ -58,8 +58,7 @@ namespace HabitsApp.Client.Pages
                 var confirmed = (bool)await DialogService.Confirm(
                     $"Are you sure you want to Delete the activity " +
                     $"{Activity.Name}" +
-                    $"{(ActivityCalendarEntries.Count > 0? $" and its " +
-                    $"{(ActivityCalendarEntries.Count == 1? "entry" : $"{ActivityCalendarEntries.Count} entries")}" : "" )}?");
+                    $"{(ActivityCalendarEntries.Count > 0? $" and its {(ActivityCalendarEntries.Count == 1? "entry" : $"{ActivityCalendarEntries.Count} entries")}" : "" )}?");
 
                 if (confirmed && NavigationManager != null && Activities != null && ActivityService != null)
                 {
