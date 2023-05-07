@@ -60,11 +60,14 @@ else
 
             <RadzenDataGridColumn TItem="GoalDto" Context="goal" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="30px">
                 <Template Context="goal">
-                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                    @if (!goal.IsCompleted)
+                    {
+                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => EditRow(goal))" @onclick:stopPropagation="true">
-                    </RadzenButton>
-                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(goal))" @onclick:stopPropagation="true">
-                    </RadzenButton>
+                        </RadzenButton>
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium" class="my-1 ms-1" Click="@(args => DeleteRow(goal))" @onclick:stopPropagation="true">
+                        </RadzenButton>
+                    }
                 </Template>
                 <EditTemplate Context="goal">
                     <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" 
