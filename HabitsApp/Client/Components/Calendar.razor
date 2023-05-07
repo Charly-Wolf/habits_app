@@ -34,7 +34,7 @@ else
                 <EditTemplate Context="entry">
                     @*TODO: Bind Value - Activity *@
                     <RadzenDropDown @bind-Value=entry.ActivityId TValue="int" Data=@Activities TextProperty="Name"
-                                ValueProperty="Id" Style="width: 100%; max-width: 400px;" />
+                                ValueProperty="Id" Style="width: 100%; max-width: 400px;" Change=OnChangeActDropDown />
                 </EditTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="CalendarEntryDto" Property="Start" Title="Start" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm tt}">
@@ -64,8 +64,8 @@ else
                     </RadzenButton>
                 </Template>
                 <EditTemplate Context="entry">
-                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" 
-                                    Size="ButtonSize.Medium" Click="@((args) => SaveRow(entry))" />
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat"
+                              Size="ButtonSize.Medium" Click="@((args) => SaveRow(entry))" Disabled=SaveBtnDisabled />
              
                     <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" 
                                     Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(entry))" />

@@ -23,6 +23,7 @@ namespace HabitsApp.Client.Components
         GoalDto? goalToUpdate; // Goal to be edited in the DB (PUT)
         public string CompletedGoalsString = "";
         public bool DeleteBtnVisible = true;
+        public bool SaveBtnDisabled = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -65,6 +66,7 @@ namespace HabitsApp.Client.Components
 
             goalsGrid?.CancelEditRow(goal);
             DeleteBtnVisible = true;
+            ToggleSaveBtn();
 
             // TODO: update UI if cancelled
         }
@@ -74,9 +76,11 @@ namespace HabitsApp.Client.Components
             if (goalsGrid != null)
             {
                 await goalsGrid.UpdateRow(goalToAdd);
+                DeleteBtnVisible = true;
+                await OnInitializedAsync();
+                ToggleSaveBtn();
             }
-            DeleteBtnVisible = true;
-            await OnInitializedAsync();
+            
         }
 
         async void OnCreateRow(GoalDto newGoal) // After saving a NEW Goal
@@ -180,6 +184,16 @@ namespace HabitsApp.Client.Components
                 }
                 StateHasChanged();
             }
+        }
+
+        public void ToggleSaveBtn()
+        {
+            SaveBtnDisabled = !SaveBtnDisabled;
+        }
+
+        public void OnChangeActDropDown()
+        {
+            if (SaveBtnDisabled) ToggleSaveBtn();
         }
     }
 }

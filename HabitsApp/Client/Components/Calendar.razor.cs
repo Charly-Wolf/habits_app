@@ -22,6 +22,7 @@ namespace HabitsApp.Client.Components
         CalendarEntryDto? entryToUpdate;
         public string? EntryDurationString;
         public bool DeleteBtnVisible = true;
+        public bool SaveBtnDisabled = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -61,6 +62,7 @@ namespace HabitsApp.Client.Components
                 await entriesGrid.UpdateRow(entryToAdd);
             }
             DeleteBtnVisible = true;
+            ToggleSaveBtn();
             await OnInitializedAsync();
         }
 
@@ -109,6 +111,7 @@ namespace HabitsApp.Client.Components
 
             entriesGrid?.CancelEditRow(entry);
             DeleteBtnVisible = true;
+            ToggleSaveBtn();
             // TODO: update UI if cancelled
         }
 
@@ -157,6 +160,16 @@ namespace HabitsApp.Client.Components
             var goalToRemove = GetCalendarEntry(id);
 
             CalendarEntries?.Remove(goalToRemove);
+        }
+
+        public void ToggleSaveBtn()
+        {
+            SaveBtnDisabled = !SaveBtnDisabled;
+        }
+
+        public void OnChangeActDropDown()
+        {
+            if (SaveBtnDisabled) ToggleSaveBtn();
         }
     }
 }

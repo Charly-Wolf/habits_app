@@ -36,9 +36,9 @@ else
                     </a>
                 </Template>
                 <EditTemplate Context="goal">
-                    @*TODO: Bind Value - Activity *@
                     <RadzenDropDown @bind-Value=goal.ActivityId TValue="int" Data=@Activities TextProperty="Name"
-                                ValueProperty="Id" Placeholder="Select Activity" Style="width: 100%; max-width: 400px;" Name="ActivityDropDown" />
+                                ValueProperty="Id" Placeholder="Select Activity" Style="width: 100%; max-width: 400px;" 
+                                Name="ActivityDropDown" Change=OnChangeActDropDown />                
                 </EditTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="GoalDto" Property="DurationMinutes" Title="Duration" Width="50px" TextAlign="TextAlign.Center" FormatString="{0:hh:mm:ss}">
@@ -68,7 +68,7 @@ else
                 </Template>
                 <EditTemplate Context="goal">
                     <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" 
-                                    Size="ButtonSize.Medium" Click="@((args) => SaveRow(goal))" />
+                                    Size="ButtonSize.Medium" Click="@((args) => SaveRow(goal))" Disabled=SaveBtnDisabled />
                     <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" 
                                     Size="ButtonSize.Medium" class="my-1 ms-1" Click="@((args) => CancelEdit(goal))" />
                     <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" 
